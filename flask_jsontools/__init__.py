@@ -7,3 +7,7 @@ from .formatting import (
     SqlAlchemyResponse
 )
 from .views import MethodView, RestfulView, methodview
+
+
+__author__ = 'Mark Vartanyan'
+__version__ = '0.1.2'
