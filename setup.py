@@ -11,7 +11,7 @@ def get_requirements(suffix=''):
     BASE_PATH = os.path.dirname(__file__)
     with open(os.path.join(BASE_PATH, 'requirements%s.txt' % suffix)) as f:
         rv = f.read().splitlines()
-    return rv
+        return rv
 
 def get_version(file):
     _version_re = re.compile(r'__version__\s+=\s+(.*)')
