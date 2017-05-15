@@ -41,7 +41,6 @@ setup(
     entry_points={},
 
     install_requires=get_requirements(),
-    tests_require=['sqlalchemy',],
     extras_require={},
     include_package_data=True,
     test_suite='nose.collector',

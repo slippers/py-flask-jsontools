@@ -78,5 +78,3 @@ def make_json_response(rv):
 
     def preprocess_response_data(self, response):
         return json.dumps(response, cls=DynamicJSONEncoder)
-
-

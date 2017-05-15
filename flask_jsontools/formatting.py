@@ -2,15 +2,32 @@ from flask.json import JSONEncoder
 from flask import json
 from .response import JsonResponse
 
+
 class DynamicJSONEncoder(JSONEncoder):
     """ JSON encoder for custom classes:
-
         Uses __json__() method if available to prepare the object.
         Especially useful for SQLAlchemy models
     """
+    def encode(self, obj):
+        """
+        sqlalchemy can return a KeyedTuple.
+        <class 'sqlalchemy.util._collections.result'>
+        must call the _asdict to get the name:value 
+        versus the __repr__ which is () tuple
+        """
+        if isinstance(obj, tuple) and hasattr(obj, '_asdict'):
+            return super(DynamicJSONEncoder, self) \
+                    .encode(obj._asdict())
+        return super(DynamicJSONEncoder, self).encode(obj)
+
 
     def default(self, o):
-        # Custom JSON-encodeable objects
+        """
+        Custom JSON-encodeable objects
+        given an unknown object like sqlalchemy table
+        use the JsonSerializableBase.__json__()
+        """
+
         if hasattr(o, '__json__'):
             return o.__json__()
 
