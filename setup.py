@@ -24,13 +24,12 @@ def get_version(file):
 
 setup(
     # http://pythonhosted.org/setuptools/setuptools.html
-    name='flask_jsontools',
-    #version='0.1.1-0',
+    name='flask_jsontools_slippers',
     version=get_version('flask_jsontools/__init__.py'),
     author='Mark Vartanyan',
     author_email='kolypto@gmail.com',
 
-    url='https://github.com/kolypto/py-flask-jsontools',
+    url='https://github.com/slippers/py-flask-jsontools',
     license='BSD',
     description=__doc__,
     long_description=open('README.rst').read(),
@@ -43,7 +42,7 @@ setup(
     install_requires=get_requirements(),
     extras_require={},
     include_package_data=True,
-    test_suite='nose.collector',
+    test_suite='pytest',
 
     platforms='any',
     classifiers=[
