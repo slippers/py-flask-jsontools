@@ -1,3 +1,5 @@
 include README.*
 include LICENSE
+include requirements.*
+include dev-requirements.*
 recursive-include misc *

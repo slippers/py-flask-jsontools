@@ -4,7 +4,7 @@ pip-compile dev-requirements.in
 
 # compile the dist
 python setup.py bdist_wheel --universal
-
+python setup.py sdist
 
 # upload to pypi
 twine upload dist/*
