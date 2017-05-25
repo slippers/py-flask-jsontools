@@ -8,7 +8,7 @@ import ast
 
 
 def get_requirements(suffix=''):
-    BASE_PATH = os.path.dirname(__file__)
+    BASE_PATH = os.path.join(os.path.dirname(__file__), 'requirements')
     with open(os.path.join(BASE_PATH, 'requirements%s.txt' % suffix)) as f:
         rv = f.read().splitlines()
         return rv

@@ -168,6 +168,10 @@ class ModelTest(unittest.TestCase):
 
          http://docs.sqlalchemy.org/en/latest/core/selectable.html
          '''
+
+        empty = json.dumps('', cls=DynamicJSONEncoder)
+        empty = json.dumps([], cls=DynamicJSONEncoder)
+
         query = select([Person.id, Person.name]) \
                 .select_from(Person) \
 
@@ -176,6 +180,22 @@ class ModelTest(unittest.TestCase):
         dump = json.dumps(rs, cls=DynamicJSONEncoder)
         xray = json.loads(dump)
         self.assertSequenceEqual(xray, {'id': 1, 'name': 'oman'})
+
+    def test_model_list_asdict(self):
+        '''
+        a keyedtuple could be the result of a query
+        need to call the _asdict method to get dictionary
+
+         http://docs.sqlalchemy.org/en/latest/core/selectable.html
+         '''
+        query = select([Person.id, Person.name]) \
+                .select_from(Person) \
+
+        rs = self.session.query(query).all()
+
+        dump = json.dumps(rs, cls=DynamicJSONEncoder)
+        xray = json.loads(dump)
+        self.assertSequenceEqual(xray, [{'name': 'oman', 'id': 1}, {'name': 'twoman', 'id': 2}])
 
     def test_persons(self):
         with self.app.test_client() as c:

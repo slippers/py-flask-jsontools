@@ -12,12 +12,16 @@ class DynamicJSONEncoder(JSONEncoder):
         """
         sqlalchemy can return a KeyedTuple.
         <class 'sqlalchemy.util._collections.result'>
-        must call the _asdict to get the name:value 
+        must call the _asdict to get the name:value
         versus the __repr__ which is () tuple
         """
         if isinstance(obj, tuple) and hasattr(obj, '_asdict'):
             return super(DynamicJSONEncoder, self) \
                     .encode(obj._asdict())
+
+        if isinstance(obj, list) and len(obj) > 0 and hasattr(obj[0], '_asdict'):
+            return json.dumps([o._asdict() for o in obj])
+
         return super(DynamicJSONEncoder, self).encode(obj)
 
 
@@ -27,7 +31,6 @@ class DynamicJSONEncoder(JSONEncoder):
         given an unknown object like sqlalchemy table
         use the JsonSerializableBase.__json__()
         """
-
         if hasattr(o, '__json__'):
             return o.__json__()
 
